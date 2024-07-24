@@ -1,22 +1,6 @@
 import { defaultMetaTags, m } from "@ckzero/maya/web";
-import cyferLogo from "./@assets/cyfer-logo.png";
-
-const HomePage = () => {
-  return m.Div({
-    class: "bg-red",
-    children: [
-      m.A({
-        href: "maya",
-        innerText: "go to maya",
-      }),
-      m.Img({
-        src: cyferLogo,
-        height: "300",
-        width: "300",
-      }),
-    ],
-  });
-};
+import stylesSrc from "./styles.css";
+import { HomePage } from "./home";
 
 export const page = () =>
   m.Html({
@@ -26,7 +10,7 @@ export const page = () =>
         children: [
           ...defaultMetaTags(),
           m.Title({
-            innerText: "Living Room",
+            innerText: "Cyfer Tech ™",
           }),
           m.Link({
             rel: "stylesheet",
@@ -34,11 +18,12 @@ export const page = () =>
           }),
           m.Link({
             rel: "stylesheet",
-            href: "styles.css",
+            href: stylesSrc,
           }),
         ],
       }),
       m.Body({
+        class: "bg-pale",
         children: [
           m.Script({
             src: "main.js",

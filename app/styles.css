@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+  font-family: 'Sometype Mono', monospace;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.min-vh-20 {
+  min-height: 20vh;
+}
+
+.space-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.bg-pale {
+  background-color: rgb(245, 244, 242);
+}
+
+.bg-pale-dark {
+  background-color: rgb(230, 230, 230);
+}

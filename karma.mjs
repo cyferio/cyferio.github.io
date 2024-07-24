@@ -25,7 +25,7 @@ const config = {
   },
   vscode: {
     "files.exclude": {
-      ".brahma": true,
+      ".brahma": false,
       ".gitignore": true,
       node_modules: true,
       "tsconfig.json": true,
