@@ -9,7 +9,8 @@ export const Header = () =>
     contentClassNames: "pv3 flex items-center justify-between",
     children: [
       m.A({
-        class: "space-mono flex items-center justify-start no-underline",
+        class:
+          "space-mono link black flex items-center justify-start no-underline",
         href: "/",
         children: [
           m.Img({
