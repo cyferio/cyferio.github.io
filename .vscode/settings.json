@@ -3,6 +3,25 @@
     ".brahma": true,
     ".gitignore": true,
     "node_modules": true,
-    "stage": false
+    "tsconfig.json": true,
+    "global.d.ts": true,
+    "stage": true,
+    "docs": false
+  },
+  "liveServer.settings.root": "/stage",
+  "liveServer.settings.port": 5555,
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "karma.mjs",
+        "isAsync": false,
+        "cmd": "brahma install"
+      },
+      {
+        "match": ".*",
+        "isAsync": false,
+        "cmd": "brahma stage"
+      }
+    ]
   }
 }

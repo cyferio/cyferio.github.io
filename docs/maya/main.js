@@ -589,22 +589,20 @@ var defaultMetaTags = () => [
     content: "width=device-width, initial-scale=1.0"
   })
 ];
-// ../app/@assets/cyfer-logo.png
-var cyfer_logo_default = "./cyfer-logo-b683dbcfab1558d8.png";
+// ../app/@assets/maya-logo.png
+var maya_logo_default = "./maya-logo-b8fc0e72d41acc15.png";
 
-// ../app/page.ts
+// ../app/maya/page.ts
 var HomePage = () => {
   return m.Div({
     class: "bg-red",
     children: [
-      m.A({
-        href: "maya",
-        innerText: "go to maya"
-      }),
-      m.Img({
-        src: cyfer_logo_default,
-        height: "300",
-        width: "300"
+      m.Div({
+        children: [
+          m.Img({
+            src: maya_logo_default
+          })
+        ]
       })
     ]
   });
@@ -616,7 +614,7 @@ var page = () => m.Html({
       children: [
         ...defaultMetaTags(),
         m.Title({
-          innerText: "Living Room"
+          innerText: "MayaJs"
         }),
         m.Link({
           rel: "stylesheet",
@@ -640,5 +638,5 @@ var page = () => m.Html({
   ]
 });
 
-// ../app/main.ts
+// ../app/maya/main.ts
 runScript(page);
