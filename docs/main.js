@@ -84,6 +84,9 @@ var derived = (signalValueGetter) => {
   return derivedSignal;
 };
 var valueIsSignal = (value) => !!(value?.type === "signal");
+
+// node_modules/@ckzero/maya/src/signal/array-signal.js
+var valueIsArrSignal = (value) => !!value?.isIndexedArraySignal;
 // node_modules/@ckzero/maya/src/web/constants.js
 var mayaEventKeys = [
   "onunmount"
@@ -570,6 +573,15 @@ var createEl = (tagName, props) => {
 };
 
 // node_modules/@ckzero/maya/src/web/components.js
+function Component(comp) {
+  return function(props) {
+    const allProps = Object.entries(props).reduce((map, [key, value]) => {
+      map[key] = valueIsSignal(value) || valueIsArrSignal(value) || typeof value === "function" ? value : derived(() => value);
+      return map;
+    }, {});
+    return comp(allProps);
+  };
+}
 var m = htmlTagNames.reduce((map, tagName) => {
   const mayaTag = tagName.split("").map((char, index) => !index ? char.toUpperCase() : char).join("");
   map[mayaTag] = (props) => createEl(tagName, props);
@@ -589,26 +601,312 @@ var defaultMetaTags = () => [
     content: "width=device-width, initial-scale=1.0"
   })
 ];
+// ../app/styles.css
+var styles_default = "./styles-ae57a222294e5524.css";
+
 // ../app/@assets/cyfer-logo.png
 var cyfer_logo_default = "./cyfer-logo-b683dbcfab1558d8.png";
 
-// ../app/page.ts
-var HomePage = () => {
+// ../app/@components/confined.ts
+var Confined = Component(({ classNames, contentClassNames, children }) => {
   return m.Div({
-    class: "bg-red",
+    class: `w-100 ${classNames?.value || ""}`,
     children: [
-      m.A({
-        href: "maya",
-        innerText: "go to maya"
-      }),
-      m.Img({
-        src: cyfer_logo_default,
-        height: "300",
-        width: "300"
+      m.Div({
+        class: `mw8 center ${contentClassNames?.value || ""}`,
+        children
       })
     ]
   });
+});
+
+// ../app/@components/link.ts
+var Link = Component(({ classNames, target, href, label }) => m.A({
+  class: `no-underline link red ${classNames?.value || ""}`,
+  target: target?.value || "",
+  href: href.value,
+  innerText: label.value
+}));
+
+// ../app/@components/header.ts
+var Header = () => Confined({
+  classNames: "sticky top-0 bg-pale",
+  contentClassNames: "pv3 flex items-center justify-between",
+  children: [
+    m.A({
+      class: "space-mono flex items-center justify-start no-underline",
+      href: "/",
+      children: [
+        m.Img({
+          src: cyfer_logo_default,
+          height: "56",
+          width: "56"
+        }),
+        m.Span({
+          class: "ml2",
+          children: [
+            m.Div({
+              class: "f4",
+              innerText: "CYFER"
+            }),
+            m.Div({
+              class: "f4",
+              innerText: "TECH"
+            })
+          ]
+        })
+      ]
+    }),
+    m.Div({
+      class: "flex items-center justify-end",
+      children: [
+        Link({
+          classNames: "ml4 no-underline",
+          href: "#products",
+          label: "Products"
+        }),
+        Link({
+          classNames: "ml4 no-underline",
+          href: "#blogs",
+          label: "Blogs"
+        }),
+        Link({
+          classNames: "ml4 no-underline",
+          href: "#about-us",
+          label: "About Us"
+        }),
+        m.A({
+          class: "ml4",
+          href: "https://github.com/cyferio",
+          children: [
+            m.Img({
+              class: "ba b--none br-100",
+              src: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              height: "40",
+              width: "40"
+            })
+          ]
+        })
+      ]
+    })
+  ]
+});
+
+// ../app/@components/titled-list.ts
+var TitledList = Component(({ classNames, header, links, bottomComponent }) => m.Div({
+  class: "flex items-start",
+  children: [
+    m.Div({
+      class: "bl b--moon-gray min-vh-20 mh5"
+    }),
+    m.Div({
+      class: classNames?.value || "",
+      children: [
+        m.P({
+          class: "space-mono mt0 f3 lh-solid",
+          innerText: header.value
+        }),
+        ...(links.value || []).map((link3) => m.Div({
+          class: "mb3",
+          children: [
+            Link({
+              href: link3.href,
+              label: link3.label
+            })
+          ]
+        })),
+        bottomComponent?.value || m.Div({ class: "dn" })
+      ]
+    })
+  ]
+}));
+
+// ../app/@components/footer.ts
+var Footer = () => Confined({
+  classNames: "bg-pale-dark pa5",
+  contentClassNames: "flex items-start justify-between",
+  children: [
+    m.Div({
+      class: "flex flex-column items-stretch justify-between",
+      children: [
+        m.Div({
+          children: [
+            m.A({
+              class: "flex items-center justify-start no-underline",
+              href: "/",
+              children: [
+                m.Img({
+                  src: cyfer_logo_default,
+                  height: "32",
+                  width: "32"
+                })
+              ]
+            }),
+            m.P({
+              class: "m0 f7",
+              innerText: "\xA9 2024 Cyfer Tech."
+            }),
+            m.P({
+              class: "nt2 f7",
+              innerText: "All rights reserved."
+            })
+          ]
+        }),
+        m.P({
+          class: "mt4 pt3 mb0",
+          innerText: "This site is created using Maya."
+        })
+      ]
+    }),
+    m.Div({
+      class: "flex items-start justify-between",
+      children: [
+        TitledList({
+          header: "Products",
+          links: [
+            {
+              label: "Maya",
+              href: "/maya"
+            },
+            {
+              label: "KarmaJs",
+              href: "/karma"
+            },
+            {
+              label: "Yajman",
+              href: "/yajman"
+            },
+            {
+              label: "Batua",
+              href: "/batua"
+            }
+          ]
+        }),
+        TitledList({
+          header: "Company",
+          links: [
+            {
+              label: "About us",
+              href: "#about-us"
+            },
+            {
+              label: "Blogs",
+              href: "#blogs"
+            },
+            {
+              label: "Team",
+              href: "#about-us"
+            },
+            {
+              label: "Career",
+              href: "/careers"
+            }
+          ]
+        }),
+        m.Div({
+          children: [
+            TitledList({
+              header: "Relations",
+              links: [
+                {
+                  label: "Sponsor Us",
+                  href: "/sponsor-us"
+                },
+                {
+                  label: "FAQs",
+                  href: "/faqs"
+                },
+                {
+                  label: "Feedback",
+                  href: "/feedback"
+                }
+              ],
+              bottomComponent: m.Span({
+                class: "flex items-center justify-start",
+                children: [
+                  m.A({
+                    target: "_blank",
+                    href: "https://twitter.com/thecyfertech",
+                    children: [
+                      m.Img({
+                        class: "ba b--none br-100",
+                        src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbXPIazCMACE4d+L2qoZFEGSIGcRc/gJJB5XMzGJmK9EN0HMi+qaibkKVF1txdQe4g0YzPK5yyWXHL9TaPNQ89LojH87N1rbJcXkMF4Fk31UMrf34hm14KUeoQxGArALHTMuQD2cAWQfJXOpgTbksGr9ng8qluShJTPhyCdx63POg7rEim95ZyR68I1ggQpnCEGwyPicw6hZtPEGmnhkycqOio1zm6XuFtyw5XDXfGvuau0dXHzJp8pfBPuhIXO9ZK5ILUCdSvLYMpc6ASBtl3EaC97I4KaFaOCaBE9Zn5jUsVqR2vcTJZO1DdbGoZryVp94Ka/mQfE7f2T3df0WBhLDAAAAAElFTkSuQmCC",
+                        height: "24",
+                        width: "24"
+                      })
+                    ]
+                  }),
+                  m.A({
+                    class: "ml3",
+                    target: "_blank",
+                    href: "https://github.com/thecyfertech",
+                    children: [
+                      m.Img({
+                        class: "ba b--none br-100",
+                        src: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                        height: "32",
+                        width: "32"
+                      })
+                    ]
+                  })
+                ]
+              })
+            })
+          ]
+        })
+      ]
+    })
+  ]
+});
+
+// ../app/home.ts
+var HomePage = () => {
+  return m.Div({
+    children: [
+      Header(),
+      Confined({
+        classNames: "items-center justify-center",
+        children: [
+          m.Div({
+            class: "mv6 pv4 w-50 center",
+            children: [
+              m.P({
+                class: "tc i space-mono f1",
+                innerText: `"don't be evil"`
+              }),
+              m.P({
+                class: "tc nt3 f3 lh-copy",
+                innerText: `free up the tech, from the clutches of profit making mega-machines`
+              })
+            ]
+          }),
+          m.Div({
+            children: [
+              m.P({
+                id: "products",
+                class: "f2 space-mono lh-copy",
+                innerText: "# products"
+              }),
+              m.P({
+                id: "blogs",
+                class: "f2 space-mono lh-copy",
+                innerText: "# blogs"
+              }),
+              m.P({
+                id: "about-us",
+                class: "f2 space-mono lh-copy",
+                innerText: "# about us"
+              })
+            ]
+          })
+        ]
+      }),
+      Footer()
+    ]
+  });
 };
+
+// ../app/page.ts
 var page = () => m.Html({
   lang: "en",
   children: [
@@ -616,7 +914,7 @@ var page = () => m.Html({
       children: [
         ...defaultMetaTags(),
         m.Title({
-          innerText: "Living Room"
+          innerText: "Cyfer Tech \u2122"
         }),
         m.Link({
           rel: "stylesheet",
@@ -624,11 +922,12 @@ var page = () => m.Html({
         }),
         m.Link({
           rel: "stylesheet",
-          href: "styles.css"
+          href: styles_default
         })
       ]
     }),
     m.Body({
+      class: "bg-pale",
       children: [
         m.Script({
           src: "main.js",
