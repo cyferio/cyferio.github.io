@@ -1,12 +1,12 @@
 {
   "files.exclude": {
-    ".brahma": false,
-    ".gitignore": true,
     "node_modules": true,
+    ".brahma": true,
+    ".gitignore": true,
     "tsconfig.json": true,
     "global.d.ts": true,
     "stage": true,
-    "docs": false
+    "docs": true
   },
   "liveServer.settings.root": "/stage",
   "liveServer.settings.port": 5555,

@@ -1,15 +1,15 @@
 import { Component, m, type MayaElement } from "@ckzero/maya/web";
 
-type ConfinedProps = {
+type ViewFrameProps = {
   classNames?: string;
   contentClassNames?: string;
   children: MayaElement[];
 };
 
-export const Confined = Component<ConfinedProps>(
+export const ViewFrame = Component<ViewFrameProps>(
   ({ classNames, contentClassNames, children }) => {
     return m.Div({
-      class: `w-100 ${classNames?.value || ""}`,
+      class: `w-100 bg-pale ${classNames?.value || ""}`,
       children: [
         m.Div({
           class: `mw8 center ${contentClassNames?.value || ""}`,

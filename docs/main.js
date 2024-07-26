@@ -601,10 +601,13 @@ var defaultMetaTags = () => [
     content: "width=device-width, initial-scale=1.0"
   })
 ];
-// ../app/styles.css
+// ../app/@assets/styles.css
 var styles_default = "./styles-ae57a222294e5524.css";
 
-// ../app/@assets/cyfer-logo.png
+// ../app/@assets/favicon.ico
+var favicon_default = "./favicon-3e068ce2428e692a.ico";
+
+// ../app/@assets/images/cyfer-logo.png
 var cyfer_logo_default = "./cyfer-logo-b683dbcfab1558d8.png";
 
 // ../app/@components/confined.ts
@@ -622,7 +625,7 @@ var Confined = Component(({ classNames, contentClassNames, children }) => {
 
 // ../app/@components/link.ts
 var Link = Component(({ classNames, target, href, label }) => m.A({
-  class: `no-underline link red ${classNames?.value || ""}`,
+  class: `link link:hover red ${classNames?.value || ""}`,
   target: target?.value || "",
   href: href.value,
   innerText: label.value
@@ -631,7 +634,7 @@ var Link = Component(({ classNames, target, href, label }) => m.A({
 // ../app/@components/header.ts
 var Header = () => Confined({
   classNames: "sticky top-0 bg-pale",
-  contentClassNames: "pv3 flex items-center justify-between",
+  contentClassNames: "pv3 flex items-center justify-between pa3",
   children: [
     m.A({
       class: "space-mono link black flex items-center justify-start no-underline",
@@ -677,7 +680,7 @@ var Header = () => Confined({
         }),
         m.A({
           class: "ml4",
-          href: "https://github.com/cyferio",
+          href: "https://github.com/thecyfertech",
           children: [
             m.Img({
               class: "ba b--none br-100",
@@ -694,37 +697,34 @@ var Header = () => Confined({
 
 // ../app/@components/titled-list.ts
 var TitledList = Component(({ classNames, header, links, bottomComponent }) => m.Div({
-  class: "flex items-start",
+  class: classNames?.value || "",
   children: [
-    m.Div({
-      class: "bl b--moon-gray min-vh-20 mh5"
+    m.P({
+      class: "space-mono mt0 f3 lh-solid",
+      innerText: header.value
     }),
-    m.Div({
-      class: classNames?.value || "",
+    ...(links.value || []).map((link3) => m.Div({
+      class: "mb3",
       children: [
-        m.P({
-          class: "space-mono mt0 f3 lh-solid",
-          innerText: header.value
-        }),
-        ...(links.value || []).map((link3) => m.Div({
-          class: "mb3",
-          children: [
-            Link({
-              href: link3.href,
-              label: link3.label
-            })
-          ]
-        })),
-        bottomComponent?.value || m.Div({ class: "dn" })
+        Link({
+          href: link3.href,
+          label: link3.label
+        })
       ]
-    })
+    })),
+    bottomComponent?.value || m.Div({ class: "dn" })
   ]
+}));
+
+// ../app/@components/divider.ts
+var Divider = Component(({ className }) => m.Div({
+  class: `bl b--moon-gray min-vh-20 ${className?.value || ""}`
 }));
 
 // ../app/@components/footer.ts
 var Footer = () => Confined({
-  classNames: "bg-pale-dark pa5",
-  contentClassNames: "flex items-start justify-between",
+  classNames: "bg-pale-dark",
+  contentClassNames: "flex items-start justify-between pa4",
   children: [
     m.Div({
       class: "flex flex-column items-stretch justify-between",
@@ -761,6 +761,7 @@ var Footer = () => Confined({
     m.Div({
       class: "flex items-start justify-between",
       children: [
+        Divider({ className: "mr4 pr2" }),
         TitledList({
           header: "Products",
           links: [
@@ -782,6 +783,7 @@ var Footer = () => Confined({
             }
           ]
         }),
+        Divider({ className: "mh4 ph2" }),
         TitledList({
           header: "Company",
           links: [
@@ -803,6 +805,7 @@ var Footer = () => Confined({
             }
           ]
         }),
+        Divider({ className: "mh4 ph2" }),
         m.Div({
           children: [
             TitledList({
@@ -866,6 +869,7 @@ var HomePage = () => {
       Header(),
       Confined({
         classNames: "items-center justify-center",
+        contentClassNames: " pa3",
         children: [
           m.Div({
             class: "mv6 pv4 w-50 center",
@@ -876,7 +880,7 @@ var HomePage = () => {
               }),
               m.P({
                 class: "tc nt3 f3 lh-copy",
-                innerText: `free up the tech, from the clutches of profit making mega-machines`
+                innerText: `free up the tech, from the clutches of profit machines`
               })
             ]
           }),
@@ -892,10 +896,14 @@ var HomePage = () => {
                 class: "f2 space-mono lh-copy",
                 innerText: "# blogs"
               }),
-              m.P({
-                id: "about-us",
-                class: "f2 space-mono lh-copy",
-                innerText: "# about us"
+              m.Div({
+                children: [
+                  m.P({
+                    id: "about-us",
+                    class: "f2 space-mono lh-copy",
+                    innerText: "# about us"
+                  })
+                ]
               })
             ]
           })
@@ -923,6 +931,11 @@ var page = () => m.Html({
         m.Link({
           rel: "stylesheet",
           href: styles_default
+        }),
+        m.Link({
+          rel: "icon",
+          type: "image/x-icon",
+          href: favicon_default
         })
       ]
     }),

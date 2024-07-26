@@ -589,7 +589,7 @@ var defaultMetaTags = () => [
     content: "width=device-width, initial-scale=1.0"
   })
 ];
-// ../app/@assets/maya-logo.png
+// ../app/@assets/images/maya-logo.png
 var maya_logo_default = "./maya-logo-b8fc0e72d41acc15.png";
 
 // ../app/maya/page.ts

@@ -21,17 +21,23 @@ const config = {
     publishDir: PUBLISH_DIRNAME,
   },
   git: {
-    ignoreList: [".brahma", "node_modules", "stage", ".env", ".DS_Store"],
+    ignoreList: [
+      "node_modules",
+      ".brahma",
+      ".env",
+      ".DS_Store",
+      `${STAGING_DIRNAME}`,
+    ],
   },
   vscode: {
     "files.exclude": {
-      ".brahma": false,
-      ".gitignore": true,
       node_modules: true,
+      ".brahma": true,
+      ".gitignore": true,
       "tsconfig.json": true,
       [TS_GLOBALS_FILENAME]: true,
       [STAGING_DIRNAME]: true,
-      [PUBLISH_DIRNAME]: false,
+      [PUBLISH_DIRNAME]: true,
     },
     "liveServer.settings.root": `/${STAGING_DIRNAME}`,
     "liveServer.settings.port": LIVE_SERVER_PORT,

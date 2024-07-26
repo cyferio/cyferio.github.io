@@ -1,5 +1,5 @@
 import { defaultMetaTags, m } from "@ckzero/maya/web";
-import globalCss from "../@assets/styles.css";
+import globalCss from "../../@assets/styles.css";
 import { App } from "./app";
 
 export const page = () =>
@@ -10,7 +10,7 @@ export const page = () =>
         children: [
           ...defaultMetaTags(),
           m.Title({
-            innerText: "Maya UI Library",
+            innerText: "Maya Docs",
           }),
           m.Link({
             rel: "stylesheet",

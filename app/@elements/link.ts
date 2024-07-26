@@ -1,16 +1,19 @@
-import { Component, m, type MayaElement } from "@ckzero/maya/web";
+import { Component, m } from "@ckzero/maya/web";
 
 type LinkProps = {
   classNames?: string;
+  colorCss?: string;
   target?: string;
   href: string;
   label: string;
 };
 
 export const Link = Component<LinkProps>(
-  ({ classNames, target, href, label }) =>
+  ({ classNames, colorCss, target, href, label }) =>
     m.A({
-      class: `no-underline link red ${classNames?.value || ""}`,
+      class: `link underline ${colorCss?.value || "red"} ${
+        classNames?.value || ""
+      }`,
       target: target?.value || "",
       href: href.value,
       innerText: label.value,

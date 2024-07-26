@@ -1,5 +1,5 @@
-.brahma
 node_modules
-stage
+.brahma
 .env
 .DS_Store
+stage

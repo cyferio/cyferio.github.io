@@ -1,6 +1,7 @@
 import { defaultMetaTags, m } from "@ckzero/maya/web";
-import stylesSrc from "./styles.css";
-import { HomePage } from "./home";
+import stylesSrc from "./@assets/styles.css";
+import faviconIco from "./@assets/favicon.ico";
+import { App } from "./app";
 
 export const page = () =>
   m.Html({
@@ -20,6 +21,11 @@ export const page = () =>
             rel: "stylesheet",
             href: stylesSrc,
           }),
+          m.Link({
+            rel: "icon",
+            type: "image/x-icon",
+            href: faviconIco,
+          }),
         ],
       }),
       m.Body({
@@ -29,7 +35,7 @@ export const page = () =>
             src: "main.js",
             defer: "true",
           }),
-          HomePage(),
+          App(),
         ],
       }),
     ],
