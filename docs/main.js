@@ -602,7 +602,7 @@ var defaultMetaTags = () => [
   })
 ];
 // ../app/@assets/styles.css
-var styles_default = "./styles-ae57a222294e5524.css";
+var styles_default = "./styles-7ddbb19aea4d6c23.css";
 
 // ../app/@assets/favicon.ico
 var favicon_default = "./favicon-3e068ce2428e692a.ico";
@@ -610,10 +610,30 @@ var favicon_default = "./favicon-3e068ce2428e692a.ico";
 // ../app/@assets/images/cyfer-logo.png
 var cyfer_logo_default = "./cyfer-logo-b683dbcfab1558d8.png";
 
-// ../app/@components/confined.ts
-var Confined = Component(({ classNames, contentClassNames, children }) => {
+// ../app/@elements/brand-logo.ts
+var BrandLogo = Component(({ logoSrc, logoHref, logoSize, labelComponent }) => {
+  const size = `${logoSize?.value || 32}`;
+  return m.A({
+    class: "space-mono link black flex items-center justify-start",
+    href: logoHref.value,
+    children: [
+      m.Img({
+        src: logoSrc.value,
+        height: size,
+        width: size
+      }),
+      labelComponent?.value || m.Div({ class: "db" })
+    ]
+  });
+});
+// ../app/@elements/divider.ts
+var Divider = Component(({ className }) => m.Div({
+  class: `bl b--moon-gray min-vh-20 ${className?.value || ""}`
+}));
+// ../app/@elements/view-frame.ts
+var ViewFrame = Component(({ classNames, contentClassNames, children }) => {
   return m.Div({
-    class: `w-100 ${classNames?.value || ""}`,
+    class: `w-100 bg-pale ${classNames?.value || ""}`,
     children: [
       m.Div({
         class: `mw8 center ${contentClassNames?.value || ""}`,
@@ -623,92 +643,38 @@ var Confined = Component(({ classNames, contentClassNames, children }) => {
   });
 });
 
-// ../app/@components/link.ts
-var Link = Component(({ classNames, target, href, label }) => m.A({
-  class: `link link:hover red ${classNames?.value || ""}`,
+// ../app/@elements/link.ts
+var Link = Component(({ classNames, colorCss, target, href, label }) => m.A({
+  class: `link underline ${colorCss?.value || "red"} ${classNames?.value || ""}`,
   target: target?.value || "",
   href: href.value,
   innerText: label.value
 }));
 
-// ../app/@components/header.ts
-var Header = () => Confined({
-  classNames: "sticky top-0 bg-pale",
-  contentClassNames: "pv3 flex items-center justify-between pa3",
-  children: [
-    m.A({
-      class: "space-mono link black flex items-center justify-start no-underline",
-      href: "/",
-      children: [
-        m.Img({
-          src: cyfer_logo_default,
-          height: "56",
-          width: "56"
-        }),
-        m.Span({
-          class: "ml2",
-          children: [
-            m.Div({
-              class: "f4",
-              innerText: "CYFER"
-            }),
-            m.Div({
-              class: "f4",
-              innerText: "TECH"
-            })
-          ]
-        })
-      ]
-    }),
-    m.Div({
-      class: "flex items-center justify-end",
-      children: [
-        Link({
-          classNames: "ml4 no-underline",
-          href: "#products",
-          label: "Products"
-        }),
-        Link({
-          classNames: "ml4 no-underline",
-          href: "#blogs",
-          label: "Blogs"
-        }),
-        Link({
-          classNames: "ml4 no-underline",
-          href: "#about-us",
-          label: "About Us"
-        }),
-        m.A({
-          class: "ml4",
-          href: "https://github.com/thecyfertech",
-          children: [
-            m.Img({
-              class: "ba b--none br-100",
-              src: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-              height: "40",
-              width: "40"
-            })
-          ]
-        })
-      ]
-    })
-  ]
-});
-
-// ../app/@components/titled-list.ts
-var TitledList = Component(({ classNames, header, links, bottomComponent }) => m.Div({
-  class: classNames?.value || "",
+// ../app/@elements/titled-list.ts
+var TitledList = Component(({
+  classNames,
+  titleClassNames,
+  itemClassNames,
+  header,
+  justifyRight,
+  links,
+  linkColorCss,
+  bottomComponent
+}) => m.Div({
+  class: `${justifyRight?.value ? "tr" : ""} ${classNames?.value || ""}`,
   children: [
     m.P({
-      class: "space-mono mt0 f3 lh-solid",
+      class: `space-mono mt0 f3 lh-solid ${titleClassNames?.value || ""}`,
       innerText: header.value
     }),
-    ...(links.value || []).map((link3) => m.Div({
-      class: "mb3",
+    ...(links.value || []).map((link2) => m.Div({
+      class: `${itemClassNames?.value || ""}`,
       children: [
         Link({
-          href: link3.href,
-          label: link3.label
+          colorCss: linkColorCss?.value,
+          href: link2.href,
+          label: link2.label
         })
       ]
     })),
@@ -716,15 +682,10 @@ var TitledList = Component(({ classNames, header, links, bottomComponent }) => m
   ]
 }));
 
-// ../app/@components/divider.ts
-var Divider = Component(({ className }) => m.Div({
-  class: `bl b--moon-gray min-vh-20 ${className?.value || ""}`
-}));
-
-// ../app/@components/footer.ts
-var Footer = () => Confined({
+// ../app/@elements/footer.ts
+var Footer = Component(({ colorCss }) => ViewFrame({
   classNames: "bg-pale-dark",
-  contentClassNames: "flex items-start justify-between pa4",
+  contentClassNames: "flex items-start justify-between ph3 pv4",
   children: [
     m.Div({
       class: "flex flex-column items-stretch justify-between",
@@ -752,39 +713,33 @@ var Footer = () => Confined({
             })
           ]
         }),
-        m.P({
+        m.Span({
           class: "mt4 pt3 mb0",
-          innerText: "This site is created using Maya."
+          children: [
+            m.Span({
+              innerText: "This site is created using "
+            }),
+            Link({
+              colorCss: colorCss?.value,
+              classNames: "underline",
+              href: "maya",
+              label: "Maya"
+            }),
+            m.Span({
+              innerText: "."
+            })
+          ]
         })
       ]
     }),
     m.Div({
       class: "flex items-start justify-between",
       children: [
-        Divider({ className: "mr4 pr2" }),
         TitledList({
-          header: "Products",
-          links: [
-            {
-              label: "Maya",
-              href: "/maya"
-            },
-            {
-              label: "KarmaJs",
-              href: "/karma"
-            },
-            {
-              label: "Yajman",
-              href: "/yajman"
-            },
-            {
-              label: "Batua",
-              href: "/batua"
-            }
-          ]
-        }),
-        Divider({ className: "mh4 ph2" }),
-        TitledList({
+          justifyRight: true,
+          linkColorCss: colorCss?.value,
+          classNames: "pr3",
+          itemClassNames: "mb3",
           header: "Company",
           links: [
             {
@@ -806,9 +761,38 @@ var Footer = () => Confined({
           ]
         }),
         Divider({ className: "mh4 ph2" }),
+        TitledList({
+          justifyRight: true,
+          linkColorCss: colorCss?.value,
+          classNames: "pr3",
+          itemClassNames: "mb3",
+          header: "Products",
+          links: [
+            {
+              label: "Maya",
+              href: "/maya"
+            },
+            {
+              label: "KarmaJs",
+              href: "/karma"
+            },
+            {
+              label: "Yajman",
+              href: "/yajman"
+            },
+            {
+              label: "Batua",
+              href: "/batua"
+            }
+          ]
+        }),
+        Divider({ className: "mh4 ph2" }),
         m.Div({
           children: [
             TitledList({
+              justifyRight: true,
+              itemClassNames: "mb3",
+              linkColorCss: colorCss?.value,
               header: "Relations",
               links: [
                 {
@@ -825,22 +809,9 @@ var Footer = () => Confined({
                 }
               ],
               bottomComponent: m.Span({
-                class: "flex items-center justify-start",
+                class: "flex items-center justify-end",
                 children: [
                   m.A({
-                    target: "_blank",
-                    href: "https://twitter.com/thecyfertech",
-                    children: [
-                      m.Img({
-                        class: "ba b--none br-100",
-                        src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbXPIazCMACE4d+L2qoZFEGSIGcRc/gJJB5XMzGJmK9EN0HMi+qaibkKVF1txdQe4g0YzPK5yyWXHL9TaPNQ89LojH87N1rbJcXkMF4Fk31UMrf34hm14KUeoQxGArALHTMuQD2cAWQfJXOpgTbksGr9ng8qluShJTPhyCdx63POg7rEim95ZyR68I1ggQpnCEGwyPicw6hZtPEGmnhkycqOio1zm6XuFtyw5XDXfGvuau0dXHzJp8pfBPuhIXO9ZK5ILUCdSvLYMpc6ASBtl3EaC97I4KaFaOCaBE9Zn5jUsVqR2vcTJZO1DdbGoZryVp94Ka/mQfE7f2T3df0WBhLDAAAAAElFTkSuQmCC",
-                        height: "24",
-                        width: "24"
-                      })
-                    ]
-                  }),
-                  m.A({
-                    class: "ml3",
                     target: "_blank",
                     href: "https://github.com/thecyfertech",
                     children: [
@@ -849,6 +820,19 @@ var Footer = () => Confined({
                         src: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
                         height: "32",
                         width: "32"
+                      })
+                    ]
+                  }),
+                  m.A({
+                    class: "ml3",
+                    target: "_blank",
+                    href: "https://twitter.com/thecyfertech",
+                    children: [
+                      m.Img({
+                        class: "ba b--none br-100",
+                        src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAAA/0lEQVR4AbXPIazCMACE4d+L2qoZFEGSIGcRc/gJJB5XMzGJmK9EN0HMi+qaibkKVF1txdQe4g0YzPK5yyWXHL9TaPNQ89LojH87N1rbJcXkMF4Fk31UMrf34hm14KUeoQxGArALHTMuQD2cAWQfJXOpgTbksGr9ng8qluShJTPhyCdx63POg7rEim95ZyR68I1ggQpnCEGwyPicw6hZtPEGmnhkycqOio1zm6XuFtyw5XDXfGvuau0dXHzJp8pfBPuhIXO9ZK5ILUCdSvLYMpc6ASBtl3EaC97I4KaFaOCaBE9Zn5jUsVqR2vcTJZO1DdbGoZryVp94Ka/mQfE7f2T3df0WBhLDAAAAAElFTkSuQmCC",
+                        height: "24",
+                        width: "24"
                       })
                     ]
                   })
@@ -860,16 +844,96 @@ var Footer = () => Confined({
       ]
     })
   ]
+}));
+// ../app/@elements/header.ts
+var Header = Component(({
+  logoSize,
+  logoSrc,
+  logoHref,
+  logoLabelComponent,
+  links,
+  rightmostComponent
+}) => m.Div({
+  class: "pa3 bg-pale sticky top-0 flex items-center justify-between",
+  children: [
+    BrandLogo({
+      logoSize: logoSize.value,
+      logoSrc: logoSrc.value,
+      logoHref: logoHref.value,
+      labelComponent: logoLabelComponent?.value
+    }),
+    m.Div({
+      class: "flex items-center justify-end",
+      children: [
+        ...links.value.map((link4) => Link({
+          classNames: "ml4",
+          colorCss: link4.colorCss,
+          href: link4.href,
+          label: link4.label
+        })),
+        rightmostComponent?.value || m.Div({ class: "dn" })
+      ]
+    })
+  ]
+}));
+// ../app/@elements/navbar.ts
+var Navbar = Component(({ children }) => {
+  return m.Div({
+    class: `dn db-ns w5 pa3 max-h-80 overflow-y-scroll`,
+    style: `
+      scrollbar-color: #e8e8e8 #f2f1f0;
+      scrollbar-width: thin;
+    `,
+    children
+  });
 });
-
-// ../app/home.ts
-var HomePage = () => {
+// ../app/app.ts
+var App = () => {
   return m.Div({
     children: [
-      Header(),
-      Confined({
+      ViewFrame({
+        children: [
+          Header({
+            logoHref: "/",
+            logoSrc: cyfer_logo_default,
+            logoSize: 56,
+            logoLabelComponent: m.A({
+              class: "ml2 link black no-underline",
+              href: "/",
+              children: [
+                m.Div({
+                  class: `f4`,
+                  innerText: "CYFER"
+                }),
+                m.Div({
+                  class: `f4`,
+                  innerText: "TECH"
+                })
+              ]
+            }),
+            links: [
+              { href: "#products", label: "Products" },
+              { href: "#blogs", label: "Blogs" },
+              { href: "#about-us", label: "About Us" }
+            ],
+            rightmostComponent: m.A({
+              class: "ml4",
+              href: "https://github.com/thecyfertech",
+              children: [
+                m.Img({
+                  class: "ba b--none br-100",
+                  src: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+                  height: "40",
+                  width: "40"
+                })
+              ]
+            })
+          })
+        ]
+      }),
+      ViewFrame({
         classNames: "items-center justify-center",
-        contentClassNames: " pa3",
+        contentClassNames: "pa3",
         children: [
           m.Div({
             class: "mv6 pv4 w-50 center",
@@ -880,7 +944,7 @@ var HomePage = () => {
               }),
               m.P({
                 class: "tc nt3 f3 lh-copy",
-                innerText: `free up the tech, from the clutches of profit machines`
+                innerText: `- an echo from the past`
               })
             ]
           }),
@@ -909,7 +973,7 @@ var HomePage = () => {
           })
         ]
       }),
-      Footer()
+      Footer({})
     ]
   });
 };
@@ -946,7 +1010,7 @@ var page = () => m.Html({
           src: "main.js",
           defer: "true"
         }),
-        HomePage()
+        App()
       ]
     })
   ]

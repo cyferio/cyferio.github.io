@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  --pcolor: red;
+}
+
+body {
+  font-family: 'Sometype Mono', monospace;
+  scrollbar-color: #e8e8e8 #f2f1f0;
+  scrollbar-width: thin;
+}
+
+.underline:hover { text-decoration: underline;}
+.link { text-decoration: none; transition: var(--pcolor) .15s ease-in; }
+.link:hover {
+  transition: var(--pcolor) .15s ease-in; 
+}
+
+.sticky {
+  position: sticky;
+}
+
+.min-vh-20 {
+  min-height: 20vh;
+}
+
+.max-h-80 {
+  max-height: 80vh;
+}
+
+.space-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+.bg-pale {
+  background-color: #f5f4f2;
+}
+
+.bg-pale-dark {
+  background-color: #e6e6e6;
+}
+
+.purple {
+  color: #7a00cc;
+}
