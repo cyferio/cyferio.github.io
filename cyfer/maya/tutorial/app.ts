@@ -5,37 +5,37 @@ import { MayaHeader } from "../@components";
 export const App = () => {
   const navList = [
     {
-      label: "1. Resources",
+      label: "1. Before Start",
       nodes: [
         {
-          label: "Getting familiar",
+          label: "Resources",
           href: "/",
         },
         {
-          label: "Prerequisite",
+          label: "Disclaimer",
+          href: "/",
+        },
+      ],
+    },
+    {
+      label: "2. Quickstart",
+      nodes: [
+        {
+          label: "Your first app",
+          href: "/",
+        },
+        {
+          label: "Understanding app structure",
           href: "/",
         },
         {
           label: "Brahma, Karma & Maya",
           href: "/",
         },
-        {
-          label: "Installation",
-          href: "/",
-        },
       ],
     },
     {
-      label: "2. Kickstart",
-      nodes: [
-        {
-          label: "Your first component",
-          href: "/",
-        },
-      ],
-    },
-    {
-      label: "3. Maya Web",
+      label: "3. Tic Tac Toe",
       nodes: [
         {
           label: "Syntax",
@@ -68,7 +68,7 @@ export const App = () => {
       ],
     },
     {
-      label: "4. Signal",
+      label: "4. Todos List",
       nodes: [
         {
           label: "What is signal?",
@@ -93,7 +93,7 @@ export const App = () => {
       ],
     },
     {
-      label: "5. Toolbox",
+      label: "5. Living Room",
       nodes: [
         {
           label: "Default HTML page",

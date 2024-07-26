@@ -601,10 +601,10 @@ var defaultMetaTags = () => [
     content: "width=device-width, initial-scale=1.0"
   })
 ];
-// ../app/@assets/styles.css
+// ../cyfer/@assets/styles.css
 var styles_default = "./styles-7ddbb19aea4d6c23.css";
 
-// ../app/@elements/brand-logo.ts
+// ../cyfer/@elements/brand-logo.ts
 var BrandLogo = Component(({ logoSrc, logoHref, logoSize, labelComponent }) => {
   const size = `${logoSize?.value || 32}`;
   return m.A({
@@ -620,14 +620,14 @@ var BrandLogo = Component(({ logoSrc, logoHref, logoSize, labelComponent }) => {
     ]
   });
 });
-// ../app/@elements/divider.ts
+// ../cyfer/@elements/divider.ts
 var Divider = Component(({ className }) => m.Div({
   class: `bl b--moon-gray min-vh-20 ${className?.value || ""}`
 }));
-// ../app/@assets/images/cyfer-logo.png
+// ../cyfer/@assets/images/cyfer-logo.png
 var cyfer_logo_default = "./cyfer-logo-b683dbcfab1558d8.png";
 
-// ../app/@elements/view-frame.ts
+// ../cyfer/@elements/view-frame.ts
 var ViewFrame = Component(({ classNames, contentClassNames, children }) => {
   return m.Div({
     class: `w-100 bg-pale ${classNames?.value || ""}`,
@@ -640,7 +640,7 @@ var ViewFrame = Component(({ classNames, contentClassNames, children }) => {
   });
 });
 
-// ../app/@elements/link.ts
+// ../cyfer/@elements/link.ts
 var Link = Component(({ classNames, colorCss, target, href, label }) => m.A({
   class: `link underline ${colorCss?.value || "red"} ${classNames?.value || ""}`,
   target: target?.value || "",
@@ -648,7 +648,7 @@ var Link = Component(({ classNames, colorCss, target, href, label }) => m.A({
   innerText: label.value
 }));
 
-// ../app/@elements/titled-list.ts
+// ../cyfer/@elements/titled-list.ts
 var TitledList = Component(({
   classNames,
   titleClassNames,
@@ -679,7 +679,7 @@ var TitledList = Component(({
   ]
 }));
 
-// ../app/@elements/footer.ts
+// ../cyfer/@elements/footer.ts
 var Footer = Component(({ colorCss }) => ViewFrame({
   classNames: "bg-pale-dark",
   contentClassNames: "flex items-start justify-between ph3 pv4",
@@ -842,7 +842,7 @@ var Footer = Component(({ colorCss }) => ViewFrame({
     })
   ]
 }));
-// ../app/@elements/header.ts
+// ../cyfer/@elements/header.ts
 var Header = Component(({
   logoSize,
   logoSrc,
@@ -873,7 +873,7 @@ var Header = Component(({
     })
   ]
 }));
-// ../app/@elements/navbar.ts
+// ../cyfer/@elements/navbar.ts
 var Navbar = Component(({ children }) => {
   return m.Div({
     class: `dn db-ns w5 pa3 max-h-80 overflow-y-scroll`,
@@ -884,10 +884,10 @@ var Navbar = Component(({ children }) => {
     children
   });
 });
-// ../app/@assets/images/maya-logo.png
+// ../cyfer/@assets/images/maya-logo.png
 var maya_logo_default = "./maya-logo-b8fc0e72d41acc15.png";
 
-// ../app/maya/@components/maya-header.ts
+// ../cyfer/maya/@components/maya-header.ts
 var MayaHeader = () => Header({
   logoHref: "/maya",
   logoSrc: maya_logo_default,
@@ -919,41 +919,41 @@ var MayaHeader = () => Header({
     }
   ]
 });
-// ../app/maya/tutorial/app.ts
+// ../cyfer/maya/tutorial/app.ts
 var App = () => {
   const navList = [
     {
-      label: "1. Resources",
+      label: "1. Before Start",
       nodes: [
         {
-          label: "Getting familiar",
+          label: "Resources",
           href: "/"
         },
         {
-          label: "Prerequisite",
+          label: "Disclaimer",
+          href: "/"
+        }
+      ]
+    },
+    {
+      label: "2. Quickstart",
+      nodes: [
+        {
+          label: "Your first app",
+          href: "/"
+        },
+        {
+          label: "Understanding app structure",
           href: "/"
         },
         {
           label: "Brahma, Karma & Maya",
           href: "/"
-        },
-        {
-          label: "Installation",
-          href: "/"
         }
       ]
     },
     {
-      label: "2. Kickstart",
-      nodes: [
-        {
-          label: "Your first component",
-          href: "/"
-        }
-      ]
-    },
-    {
-      label: "3. Maya Web",
+      label: "3. Tic Tac Toe",
       nodes: [
         {
           label: "Syntax",
@@ -986,7 +986,7 @@ var App = () => {
       ]
     },
     {
-      label: "4. Signal",
+      label: "4. Todos List",
       nodes: [
         {
           label: "What is signal?",
@@ -1011,7 +1011,7 @@ var App = () => {
       ]
     },
     {
-      label: "5. Toolbox",
+      label: "5. Living Room",
       nodes: [
         {
           label: "Default HTML page",
@@ -1068,7 +1068,7 @@ var App = () => {
   });
 };
 
-// ../app/maya/tutorial/page.ts
+// ../cyfer/maya/tutorial/page.ts
 var page = () => m.Html({
   lang: "en",
   children: [
@@ -1100,5 +1100,5 @@ var page = () => m.Html({
   ]
 });
 
-// ../app/maya/tutorial/main.ts
+// ../cyfer/maya/tutorial/main.ts
 runScript(page);

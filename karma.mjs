@@ -1,5 +1,5 @@
 const APP_NAME = "cyfer.in";
-const APP_SRC_DIRNAME = "app";
+const APP_SRC_DIRNAME = "cyfer";
 const STAGING_DIRNAME = "stage";
 const PUBLISH_DIRNAME = "docs";
 const TS_GLOBALS_FILENAME = "global.d.ts";
